@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        canvas {
+            border: 1px dotted red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="myCanvas" width="600" height="400">
+    </canvas>
+    <div id="info"></div>
+    <input type="text" id="changecolor">
+    <button id="btn">確定</button>
+
+    <script>
+        const myCanvas = document.querySelector('#myCanvas');
+        const info = document.querySelector('#info');
+        const ctx = myCanvas.getContext('2d');
+
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 1;
+
+        const myMDown = function (event) {
+            ctx.beginPath();
+            ctx.moveTo(event.offsetX, event.offsetY);
+            myCanvas.addEventListener('mousemove', myMMove);
+        };
+        const myMUp = function (event) {
+            myCanvas.removeEventListener('mousemove', myMMove);
+        };
+        const myMMove = function (event) {
+            info.innerText = `x: ${event.offsetX}, y: ${event.offsetY}
+        page-x: ${event.pageX}, page-y: ${event.pageY}
+        client-x: ${event.clientX}, client-y: ${event.clientY}
+        `;
+            ctx.lineTo(event.offsetX, event.offsetY);
+            ctx.stroke();
+        };
+        myCanvas.addEventListener('mousedown', myMDown);
+        window.addEventListener('mouseup', myMUp);
+
+
+    </script>
+</body>
+
+</html>
