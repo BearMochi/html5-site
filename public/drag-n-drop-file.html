@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .rect {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            background-color: #aac9e8;
+            display: flex;
+        }
+    </style>
+
+</head>
+
+<body>
+    <input type="file" id="myfiles" accept="image/*" multiple>
+    <div class="rect" style="left: 200px; top:300px"></div>
+
+    <script src="javascripts/jquery-3.4.1.js"></script>
+    <script>
+
+        const rect = $('.rect');
+
+        const myDrop = function (event) {
+            event.preventDefault();
+            console.log(event.originalEvent.dataTransfer.files);
+
+        };
+        rect.on('dragenter', (event) => {
+            rect.css('background-color', '#e8d1aa');
+        });
+        rect.on('dragleave', (event) => {
+            rect.css('background-color', '#aac9e8');
+        });
+        rect.on('dragover', (event) => {
+            event.preventDefault();
+        });
+        rect.on('drop', myDrop);
+
+    </script>
+</body>
+
+</html>
