@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const serveIndex = require('serve-index');
+const axios = require('axios');
+const cheerio = require('cheerio')
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -23,6 +26,23 @@ app.use('/', serveIndex('public', { 'icons': true }));
 
 // app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.get('/yahoo', (req, res) => {
+  axios.get('https://tw.yahoo.com/')
+    .then(r => {
+      // res.send(r.data);
+      const ar = [];
+      const $ = cheerio.load(r.data);
+      // res.send($('img').eq(0).attr('src'));
+      $('img').each((index, el) => {
+        ar.push($(el).attr('src'));
+      })
+      res.send(ar.join('<br>'));
+    })
+});
+// https://www.npmjs.com/package/puppeteer
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
