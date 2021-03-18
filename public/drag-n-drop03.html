@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .rect {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            background-color: #aac9e8;
+            /*left: 300px;*/
+            /*top: 100px;*/
+        }
+
+        .ball {
+            /*position: relative;*/
+            width: 60px;
+            height: 60px;
+            background-color: #dd8b58;
+            /*left: 100px;*/
+            /*top: 50px;*/
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="rect">
+        <div class="ball" id="ball1" draggable="true">1</div>
+        <div class="ball" id="ball2" draggable="true">2</div>
+        <div class="ball" id="ball3" draggable="true">3</div>
+    </div>
+    <div class="rect" style="left: 200px; top:300px"></div>
+
+
+
+
+
+    <script src="javascripts/jquery-3.4.1.js"></script>
+    <script>
+        const rects = $('.rect');
+        const balls = $('.ball');
+
+        const myDragStart = function (event) {
+            event.originalEvent.dataTransfer.setData('text', event.target.id);
+        };
+
+        balls.on('dragstart', myDragStart);
+
+
+        const myDrop = function (event) {
+            const id = event.originalEvent.dataTransfer.getData('text');
+            const ball = document.querySelector('#' + id);
+            event.currentTarget.appendChild(ball)
+        };
+
+        rects.on('dragover', (event) => {
+            event.preventDefault();
+        });
+        rects.on('drop', myDrop);
+
+
+    </script>
+</body>
+
+</html>

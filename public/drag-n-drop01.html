@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .rect {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background-color: #5c91c6;
+            left: 300px;
+            top: 100px;
+        }
+
+        .ball {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #dd8b58;
+            left: 100px;
+            top: 50px;
+            border-radius: 50%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="ball" draggable="true"></div>
+    <div class="rect"></div>
+
+    <script>
+        const rect = document.querySelector('.rect');
+        const ball = document.querySelector('.ball');
+
+        const listener = function (event) {
+            console.log(event.type, event.target);
+        };
+
+        ball.addEventListener('dragstart', listener);
+        // ball.addEventListener('drag', listener);       正在拖拉
+        ball.addEventListener('dragend', listener);
+
+        rect.addEventListener('dragenter', listener);
+        rect.addEventListener('dragleave', listener);
+
+        // 一定要在 dragover 呼叫 preventDefault(), drop 事件才會發生
+        rect.addEventListener('dragover', function (event) {
+            event.preventDefault();
+        });
+        rect.addEventListener('drop', listener);
+
+
+    </script>
+</body>
+
+</html>
