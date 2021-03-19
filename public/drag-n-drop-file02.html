@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .rect {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #aac9e8;
+            display: flex;
+        }
+
+        .divpic {
+            position: absolute;
+            left: 200px;
+            top: 200px;
+            border: solid 3px aqua;
+            border-radius: 30px;
+            width: 800px;
+            height: 600px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="divpic">
+        <img src="" alt="" id="myimg" class="w-100,h-100">
+    </div>
+    <div class="rect" style="left: 1500px; top:300px">拖拉圖檔到這裡</div>
+
+    <script src="javascripts/jquery-3.4.1.js"></script>
+    <script>
+
+        const rect = $('.rect');
+
+        const myDrop = function (event) {
+            event.preventDefault();
+            console.log(event.originalEvent.dataTransfer.files);
+            const file = event.originalEvent.dataTransfer.files[0];
+            if (file && file.type.indexOf('image') === 0) {
+                const reader = new FileReader();
+                reader.addEventListener('load', function (event) {
+                    $('#myimg').attr('src', reader.result);
+                });
+                reader.readAsDataURL(file);
+            }
+        };
+        rect.on('dragenter', (event) => {
+            rect.css('background-color', '#e8d1aa');
+        });
+        rect.on('dragleave', (event) => {
+            rect.css('background-color', '#aac9e8');
+        });
+        rect.on('dragover', (event) => {
+            event.preventDefault();
+        });
+        rect.on('drop', myDrop);
+
+    </script>
+</body>
+
+</html>
