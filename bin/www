@@ -5,14 +5,14 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('html5-site:server');
+var debug = require('debug')('fuen15-html5:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3500');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
@@ -24,6 +24,9 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+
+// require(__dirname + '/../routes/ws-echo')(server);
+require(__dirname + '/../routes/ws-chat')(server);
 
 server.listen(port);
 server.on('error', onError);

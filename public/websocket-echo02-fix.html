@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="connectBtn">Connect</button>
+    <button id="disconnectBtn">Disconnect</button>
+    <br>
+    <input type="text" id="myInput">
+    <button id="sendBtn">Send</button>
+    <br>
+    <textarea id="info" cols="30" rows="10"></textarea>
+
+    <script>
+        let socket;
+        const onOpen = event => {
+            info.value += "已連線\n";
+        };
+        const onMessage = event => {
+            info.value += `接收: ${event.data}\n`;
+        };
+        const onClose = event => {
+            info.value += "已斷線\n";
+        };
+        document.addEventListener('click', function (event) {
+            switch (event.target.id) {
+                case 'connectBtn':
+                    socket = new WebSocket(`ws://${location.host}`);
+                    socket.addEventListener('open', onOpen);
+                    socket.addEventListener('message', onMessage);
+                    socket.addEventListener('close', onClose);
+                    break;
+                case 'disconnectBtn':
+                    if (socket && socket.readyState === WebSocket.OPEN) {
+                        socket.close();
+                    }
+                    break;
+                case 'sendBtn':
+                    if (socket && socket.readyState === WebSocket.OPEN) {
+                        info.value += `傳送: ${myInput.value}\n`;
+                        socket.send(myInput.value);
+                    }
+                    break;
+            }
+        })
+    </script>
+
+</body>
+
+</html>

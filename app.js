@@ -42,6 +42,20 @@ app.get('/yahoo', (req, res) => {
 });
 // https://www.npmjs.com/package/puppeteer
 
+app.get('/try-sse', (req, res) => {
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream; charset= utf-8;',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+  });
+  let id = 1;
+
+  setInterval(function () {
+    const now = new Date;
+    res.write(`id: ${id++}\n`);
+    res.write(`data: ${now.toLocaleString()}\n\n`);
+  }, 2000);
+});
 
 
 // catch 404 and forward to error handler
